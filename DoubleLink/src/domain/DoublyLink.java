@@ -1,5 +1,8 @@
 package domain;
 
+/**
+ * Clase que genera un enlace (nodo) que almacena un tipo de dato generico y contiene el enlace siguiente y previo del nodo.
+ */
 public class DoublyLink<T> {
     private T dData; 
     private DoublyLink next; 

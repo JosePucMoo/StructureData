@@ -2,7 +2,9 @@ package domain;
 
 import exception.ErrorDoubleLinkedList;
 
-
+/**
+ * Clase que crea una lista doblemente ligada.
+ */
 public class DoublyLinkedList<T>{
     private DoublyLink<T> first; 
     private DoublyLink<T> last; 
