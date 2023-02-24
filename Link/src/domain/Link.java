@@ -5,7 +5,7 @@ package domain;
  */
 public class Link<T> {
     private T data; // Stored data 
-    private Link nextLink; // Link pointer
+    private Link<T> nextLink; // Link pointer
 
 
     
@@ -25,7 +25,7 @@ public class Link<T> {
      * @param data Dato que almacenará el nodo.
      * @param nextLink Siguiente enlaze del nodo creado.
      */
-    public Link (T data, Link nextLink){
+    public Link (T data, Link<T> nextLink){
         this.data = data;
         this.nextLink = nextLink;
 
@@ -50,12 +50,12 @@ public class Link<T> {
     }
 
 
-    public Link getNextLink() {
+    public Link<T> getNextLink() {
         return nextLink;
     }
 
 
-    public void setNextLink(Link nextLink) {
+    public void setNextLink(Link<T> nextLink) {
         this.nextLink = nextLink;
     }
     

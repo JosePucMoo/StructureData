@@ -1,5 +1,4 @@
 package test;
-
 import domain.LinkList;
 import exceptions.ErrorDeleteItem;
 

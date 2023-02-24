@@ -30,14 +30,14 @@ public class LinkList<T> {
      * @param data Dato del nodo que será ingresado a la lista.
      */
     public void insertLast ( T data) {
-        Link current = this.firstLink;
+        Link<T> current = this.firstLink;
 
         if(isEmpty()) {
             insertFirst(data);
         } else {
             while(current != null ) {
                 if (current.getNextLink() == null ) {
-                    Link newLink = new Link<T>(data, null);
+                    Link<T> newLink = new Link<T>(data, null);
                     current.setNextLink(newLink);
                     current = null;
                 } else {
@@ -66,7 +66,7 @@ public class LinkList<T> {
      * @throws ErrorDeleteItem Si la lista se encuentra vacía lanza la excepci+on.
      */
     public void deleteLast( ) throws ErrorDeleteItem{ 
-        Link current = this.firstLink;
+        Link<T> current = this.firstLink;
         if( firstLink == null){
             throw new ErrorDeleteItem("The list hasn't elements");
         } 
@@ -85,8 +85,8 @@ public class LinkList<T> {
      * @return Link
      * @throws ErrorDeleteItem Si el elemento por encontrar no existe entonces lanza la excepción.
      */
-    public Link findLink ( T data) throws ErrorDeleteItem {
-        Link current = this.firstLink;
+    public Link<T> findLink ( T data) throws ErrorDeleteItem {
+        Link<T> current = this.firstLink;
 
         while(current.getData() != data ) {
             if (current.getNextLink() == null ){
@@ -107,7 +107,7 @@ public class LinkList<T> {
      * @throws ErrorDeleteItem Si el elemento por encontrar no existe en la lista lanza la excepci+on.
      */
     public int findPosition( T data) throws ErrorDeleteItem{
-        Link current = this.firstLink;
+        Link<T> current = this.firstLink;
         int cont = 0;
 
         if( isEmpty()) {
@@ -146,7 +146,7 @@ public class LinkList<T> {
      * @throws ErrorDeleteItem Si la lista está vacía lanza la excepción.
      */
     public void deleteAt ( int index) throws ErrorDeleteItem {
-        Link current = this.firstLink;
+        Link<T> current = this.firstLink;
 
         if( isEmpty()){
             throw new ErrorDeleteItem("List is empty");
@@ -169,7 +169,7 @@ public class LinkList<T> {
         //current.getNext() es el elemento a eliminar
 
         //Almacenar en una variable temporal el elemento anterior
-        Link temp = current.getNextLink().getNextLink();
+        Link<T> temp = current.getNextLink().getNextLink();
         current.setNextLink(temp);
     } 
 
@@ -179,7 +179,7 @@ public class LinkList<T> {
      * @return int
      */
     public int size( ) {
-        Link current = this.firstLink;
+        Link<T> current = this.firstLink;
         int cont = 0;
         while(current != null ){
             cont++;
@@ -205,8 +205,8 @@ public class LinkList<T> {
      * @return Link
      * @throws ErrorDeleteItem Si la posición ingresada está fuera del tamaño emtomces lanza la excepción.
      */
-    public Link getElementAt( int index) throws ErrorDeleteItem {
-        Link current = this.firstLink;
+    public Link<T> getElementAt( int index) throws ErrorDeleteItem {
+        Link<T> current = this.firstLink;
         int cont = 0;
         while(current !=  null ){
             if(cont == index  ){
@@ -225,7 +225,7 @@ public class LinkList<T> {
      * @return Link
      * @throws ErrorDeleteItem Si la lista está vacía lanza la excepción.
      */
-    public Link getFirstElement( ) throws ErrorDeleteItem{
+    public Link<T> getFirstElement( ) throws ErrorDeleteItem{
         if(isEmpty() ) {
             throw new ErrorDeleteItem("The list is empty");
         } 
@@ -238,8 +238,8 @@ public class LinkList<T> {
      * @return Link
      * @throws ErrorDeleteItem Si la lista está vacía lanza la excepción.
      */
-    public Link getLastElement( ) throws ErrorDeleteItem {
-        Link current = this.firstLink;
+    public Link<T> getLastElement( ) throws ErrorDeleteItem {
+        Link<T> current = this.firstLink;
 
         if(isEmpty() ) {
             throw new ErrorDeleteItem("The list is empty");
@@ -272,7 +272,7 @@ public class LinkList<T> {
      * @throws ErrorDeleteItem Si está vacía la lista o si el índice propocionado está fuera del rango del la lista lanza la excepción.
      */
     public void replaceDataIndex(int index, T data ) throws ErrorDeleteItem {
-        Link current = this.firstLink;
+        Link<T> current = this.firstLink;
         int cont = 0;
 
         if(isEmpty() ) {
@@ -301,8 +301,7 @@ public class LinkList<T> {
      * @throws ErrorDeleteItem  Si la lista está vacía o si el dato no existe en la lista, entonces lanza la excepción.
      */
     public void replaceData(int data, T newdata ) throws ErrorDeleteItem {
-        Link current = this.firstLink;
-        int cont = 0;
+        Link<T> current = this.firstLink;
 
         if(isEmpty() ) {
             throw new ErrorDeleteItem("The list is empty");
@@ -327,7 +326,7 @@ public class LinkList<T> {
      * @throws ErrorDeleteItem Si el ordenamiento no es 'a' o 'd' entonces lanza la excepción,
      */
     public void insertOrdered(T data, char order ) throws ErrorDeleteItem {
-        Link current = this.firstLink;
+        Link<T> current = this.firstLink;
 
         if(isEmpty() ){
             insertFirst(data);
@@ -351,7 +350,7 @@ public class LinkList<T> {
                     current = this.firstLink;
                     while(current != null ) {
                         if((Integer) current.getData() < (Integer)data ){
-                            Link newLink = new Link<T>(data, current.getNextLink());
+                            Link<T> newLink = new Link<T>(data, current.getNextLink());
                             current.setNextLink(newLink);
                             return;
                         } else {
@@ -372,14 +371,14 @@ public class LinkList<T> {
                         return;
                     }
                     
-                    Link temp = current;
+                    Link<T> temp = current;
                     while(current != null ) {
                         if( (Integer)data > (Integer)getFirstElement().getData()) {
                             insertFirst(data);
                             return;
                         }else {
                             if((Integer) current.getData() < (Integer)data ){
-                                Link newLink = new Link<T>(data, current);
+                                Link<T> newLink = new Link<T>(data, current);
                                 temp.setNextLink(newLink);
                                 return;
                             } else {
@@ -400,7 +399,7 @@ public class LinkList<T> {
      * Muestra el conteniendo de la lista y sus elementos.
      */
     public void showList(){
-        Link current = firstLink;
+        Link<T> current = firstLink;
 
         System.out.print("List = ( first --->");
         while(current != null ){

@@ -5,8 +5,8 @@ package domain;
  */
 public class DoublyLink<T> {
     private T dData; 
-    private DoublyLink next; 
-    private DoublyLink previous; 
+    private DoublyLink<T> next; 
+    private DoublyLink<T> previous; 
 
     
     /**
@@ -49,7 +49,7 @@ public class DoublyLink<T> {
      * Retorna el nodo siguiente.
      * @return DoublyLink
      */
-    public DoublyLink getNext() {
+    public DoublyLink<T> getNext() {
         return next;
     }
 
@@ -58,7 +58,7 @@ public class DoublyLink<T> {
      * Establece el siguiente nodo.
      * @param next Es el siguiente nodo a establecer.
      */
-    public void setNext(DoublyLink next) {
+    public void setNext(DoublyLink<T> next) {
         this.next = next;
     }
 
@@ -67,7 +67,7 @@ public class DoublyLink<T> {
      * Retorna el nodo previo.
      * @return DoublyLink
      */
-    public DoublyLink getPrevious() {
+    public DoublyLink<T> getPrevious() {
         return previous;
     }
 
@@ -76,7 +76,7 @@ public class DoublyLink<T> {
      * Establece el nodo previo.
      * @param previous E el nodo previo por enlazar al nodo actual.
      */
-    public void setPrevious(DoublyLink previous) {
+    public void setPrevious(DoublyLink<T> previous) {
         this.previous = previous;
     }
 }
