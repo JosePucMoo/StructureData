@@ -2,9 +2,9 @@ package dao;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -12,13 +12,15 @@ import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 
 import domain.Song;
-import utils.ComparadorDeCancionesPorDuracion;
-import utils.ComparadorDeCancionesPorNombre;
-import utils.binaryInsertionSort;
+import utils.comparadores.ComparadorDeCancionesPorDuracion;
+import utils.comparadores.ComparadorDeCancionesPorNombre;
+import utils.sortingMethods.BinaryInsertionSort;
+import utils.sortingMethods.MergeSort;
 
 public class DaoCanciones {
     String path = "src\\dataBase\\dataset.csv";
     File archivo = new File(path);
+    LinkedList<Song> lista;
 
     public LinkedList<Song> traerCanciones() throws FileNotFoundException{
         LinkedList<Song> lista = new LinkedList<>();
@@ -54,52 +56,48 @@ public class DaoCanciones {
         return lista;
     }
 
-
-    public LinkedList<Song> OrdenarlistaPorNombre(boolean asc  ) throws FileNotFoundException{
-        LinkedList<Song> lista = new LinkedList<Song>();
-
-        lista = traerCanciones(); //Leer el archivo CSV donde están las canciones
-
-
-        lista = binaryInsertionSort.binaryInsertionSort(lista, lista.size(), new ComparadorDeCancionesPorNombre(asc));
-
-        return lista;
-    }
-
-    public LinkedList<Song> OrdenarlistaPorDuracion(boolean asc  ) throws FileNotFoundException{
-        LinkedList<Song> lista = new LinkedList<Song>();
-
-        lista = traerCanciones(); //Leer el archivo CSV donde están las canciones
-
-
-        lista = binaryInsertionSort.binaryInsertionSort(lista, lista.size(), new ComparadorDeCancionesPorDuracion(asc));
-
-        return lista;
-    }
-
-
-    public void escribirCancionesArchivo(int opcion, boolean asc) throws IOException {
-        String pathOrdenado = "src\\orderData\\BinaryInsertionSort_ordenado.csv";
-        File archivoOrdenado = new File(pathOrdenado);
-
-        LinkedList<Song> lista = null;
-
-        switch(opcion){
-            case 1: //La opción 1 sirve para ordenar de acuerdo a los nombres de las canciones
-                lista = OrdenarlistaPorNombre(asc);
+    public LinkedList<Song> ordenarLista( int opcion, Comparator<? super Song> comparator ) throws FileNotFoundException {
+        LinkedList<Song> lista = traerCanciones(); //Leer el archivo CSV donde están las canciones
+        
+        switch(opcion){ //Cada opción representa un método de ordenamiento
+            case 1: //Ordenar por metodo binaryInsertionSort
+                lista = BinaryInsertionSort.binaryInsertionSort(lista, lista.size(), comparator);
                 break;
-            case 2: //La opción 2 sirve para ordenar de acuerdo a la duracipon de las canciones
-                lista = OrdenarlistaPorDuracion(asc);
+            case 2:  //Ordenar por metodo mergeSort
+                lista = MergeSort.mergeSort(lista, comparator);
                 break;
             default: JOptionPane.showMessageDialog(null, "Opción inválida");
                 break;
         }
 
+        return lista;
+    }
+
+    public void escribirArchivo(int opcion, Comparator<? super Song> comparator ) throws IOException {
+        String pathBinary = "src\\orderData\\BinaryInsertionSort_ordenado.csv";
+        String pathMerge = "src\\orderData\\MergeSort_ordenado.csv";
+        File archivoOrdenado = null;
+
+        switch( opcion) {
+            case 1: 
+            archivoOrdenado = new File(pathBinary);
+                break;
+            case 2:  
+            archivoOrdenado = new File(pathMerge);
+                break;
+            default: JOptionPane.showMessageDialog(null, "Opción inválida");
+                break;
+        }
+
+        lista = ordenarLista(opcion, comparator);
+        
         FileWriter fw = new FileWriter(archivoOrdenado);
 
         for(Song x : lista){
             fw.append(x.getId() + "," + x.getName() + "," + x.getDuration() + "," + x.getEnergy() + "," + x.getKey() + "," + x.getLoudness() + "," + x.getMode() + "," + x.getSpeechiness() + "," + x.getAcousticness() + "," + x.getInstrumentalness() + "," + x.getLiveness() + "," + x.getValence() + "," + x.getTempo() + "," + x.getDanceability() + "\n");
         }
+
+        fw.close();
 
     }
 

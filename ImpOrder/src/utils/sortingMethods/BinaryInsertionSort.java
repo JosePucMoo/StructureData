@@ -1,11 +1,11 @@
-package utils;
+package utils.sortingMethods;
 
 import java.util.Comparator;
 import java.util.LinkedList;
 
 import domain.Song;
 
-public class binaryInsertionSort {
+public class BinaryInsertionSort {
     //  implementacion iterativa 
     public static <T> int binarySearch(LinkedList<Song> lista, Song item, int low, int high,Comparator<? super Song> c){
         while (low <= high) {
@@ -20,7 +20,7 @@ public class binaryInsertionSort {
         return low;
     }
 
-    public static <T> LinkedList<Song> binaryInsertionSort(LinkedList<Song> lista, int n, Comparator<Song> c ) {
+    public static <T> LinkedList<Song> binaryInsertionSort(LinkedList<Song> lista, int n, Comparator<? super Song> c ) {
         int i, loc, j, k;
         Song selected;
     
