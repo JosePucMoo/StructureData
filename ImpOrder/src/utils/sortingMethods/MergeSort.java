@@ -8,6 +8,7 @@ import domain.Song;
 public class MergeSort {
    private static Song[] theArray;        // ref to array theArray
    private static int nElems;               // number of data items
+   private static long tiempoTotal;
 
    public MergeSort(int max)   {
       theArray = new Song[max];      // create array
@@ -28,9 +29,14 @@ public class MergeSort {
    public static LinkedList<Song> mergeSort( LinkedList<Song> lista, Comparator<? super Song> c ) {
       theArray = new Song[lista.size()];
       theArray = transformarListToArray(lista);
+
+      long inicio = System.nanoTime(); //inicio de la ejecución del algoritmo;
       Song[] workSpace = new Song[lista.size()];
       recMergeSort(workSpace, 0, lista.size()-1, c);
 
+      long fin = System.nanoTime();
+
+      tiempoTotal = fin - inicio;
 
       lista = transformarArrayToLista();
 

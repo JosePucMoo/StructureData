@@ -1,17 +1,19 @@
-
-import dao.DaoCanciones;
-import utils.comparadores.ComparadorDeCancionesPorDuracion;
+import controller.CtrlMain;
 
 public class App {
     public static void main(String[] args) throws Exception {
         
-
-        DaoCanciones dao = new DaoCanciones();
-
-        dao.escribirArchivo(2, new ComparadorDeCancionesPorDuracion(true));
+       //if(args.length > 0 ) {
 
 
+           CtrlMain controlMain = new CtrlMain();
 
+           controlMain.mostrarMenu("dataset.csv", "SortMethod.csv");
+            
+       // } else {
+            System.out.println("No ha especificado ningún argumento");
+        //}
+        
         
     }
 }

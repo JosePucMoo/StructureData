@@ -12,8 +12,6 @@ import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 
 import domain.Song;
-import utils.comparadores.ComparadorDeCancionesPorDuracion;
-import utils.comparadores.ComparadorDeCancionesPorNombre;
 import utils.sortingMethods.BinaryInsertionSort;
 import utils.sortingMethods.MergeSort;
 
@@ -56,40 +54,10 @@ public class DaoCanciones {
         return lista;
     }
 
-    public LinkedList<Song> ordenarLista( int opcion, Comparator<? super Song> comparator ) throws FileNotFoundException {
-        LinkedList<Song> lista = traerCanciones(); //Leer el archivo CSV donde están las canciones
-        
-        switch(opcion){ //Cada opción representa un método de ordenamiento
-            case 1: //Ordenar por metodo binaryInsertionSort
-                lista = BinaryInsertionSort.binaryInsertionSort(lista, lista.size(), comparator);
-                break;
-            case 2:  //Ordenar por metodo mergeSort
-                lista = MergeSort.mergeSort(lista, comparator);
-                break;
-            default: JOptionPane.showMessageDialog(null, "Opción inválida");
-                break;
-        }
+    public void escribirArchivo(String archivoName, LinkedList<Song> lista  ) throws IOException {
+        String path = "src\\orderData\\" + archivoName;
 
-        return lista;
-    }
-
-    public void escribirArchivo(int opcion, Comparator<? super Song> comparator ) throws IOException {
-        String pathBinary = "src\\orderData\\BinaryInsertionSort_ordenado.csv";
-        String pathMerge = "src\\orderData\\MergeSort_ordenado.csv";
-        File archivoOrdenado = null;
-
-        switch( opcion) {
-            case 1: 
-            archivoOrdenado = new File(pathBinary);
-                break;
-            case 2:  
-            archivoOrdenado = new File(pathMerge);
-                break;
-            default: JOptionPane.showMessageDialog(null, "Opción inválida");
-                break;
-        }
-
-        lista = ordenarLista(opcion, comparator);
+        File archivoOrdenado = new File(path);
         
         FileWriter fw = new FileWriter(archivoOrdenado);
 

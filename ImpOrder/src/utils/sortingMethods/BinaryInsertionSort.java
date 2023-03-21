@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import domain.Song;
 
 public class BinaryInsertionSort {
+
+    private static long tiempoTotal;
+
     //  implementacion iterativa 
     public static <T> int binarySearch(LinkedList<Song> lista, Song item, int low, int high,Comparator<? super Song> c){
         while (low <= high) {
@@ -21,14 +24,16 @@ public class BinaryInsertionSort {
     }
 
     public static <T> LinkedList<Song> binaryInsertionSort(LinkedList<Song> lista, int n, Comparator<? super Song> c ) {
-        int i, loc, j, k;
+        int i, loc, j;
         Song selected;
+
+        long inicio = System.nanoTime(); //Inicio del conteo
     
         for (i = 1; i < n; ++i) {
             j = i - 1;
             selected = lista.get(i);
     
-            // encuentra la posicion donde debe ser insertado el elemento
+            // Encuentra la posicion donde debe ser insertado el elemento
             loc = binarySearch(lista, selected, 0, j, c);
     
             // Hace un corrimiento a la derecha de los datos
@@ -38,6 +43,10 @@ public class BinaryInsertionSort {
             }
             lista.set(j + 1, selected);
         }
+
+        long fin = System.nanoTime(); // fin del cálculo de la ejecución
+
+        tiempoTotal = fin - inicio; //Total del cálculo de la ejecución del algoritmo
 
         return lista;
     }
