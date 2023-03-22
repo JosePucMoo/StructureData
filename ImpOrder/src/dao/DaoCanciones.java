@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -19,14 +20,14 @@ public class DaoCanciones {
 
     public LinkedList<Song> traerCanciones() throws FileNotFoundException{
         LinkedList<Song> lista = new LinkedList<>();
-        Scanner obj = new Scanner(archivo);
+        Scanner obj = new Scanner(new FileReader(path));
         StringTokenizer tokenizer;
         
         while(obj.hasNextLine()){
             String linea = obj.nextLine();
 
             tokenizer = new StringTokenizer(linea, ",");
-
+            
             int position = Integer.parseInt(tokenizer.nextToken()) ;
             String artist = tokenizer.nextToken();
             String name = tokenizer.nextToken();
@@ -38,7 +39,8 @@ public class DaoCanciones {
             double total_Streams = Double.parseDouble(tokenizer.nextToken());
 
             Song song = new Song(position, artist, name, days, top_10, peak_Position, peak_Position_xTimes, peak_Streams, total_Streams);
-
+            
+            
             lista.add(song);
 
         }

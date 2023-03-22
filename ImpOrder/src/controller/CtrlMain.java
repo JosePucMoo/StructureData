@@ -2,6 +2,7 @@ package controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
@@ -24,7 +25,7 @@ public class CtrlMain {
     Scanner sn = new Scanner(System.in);
     LinkedList<Song> lista;
 
-    public void mostrarMenu(String archivoEntrada, String archivoSalida) throws IOException{
+    public void mostrarMenu( ) throws IOException{
         
         boolean salir = false;
         boolean ascedente = true;
@@ -33,61 +34,31 @@ public class CtrlMain {
         System.out.println("El siguiente programa ordena las 100 canciones top de spotify, usted puede elegir el método de ordenamiento, si desea ordenarlo por los nombres de las canciones o por la duración, igualmente si ascedente, descendete, alfabeticamente inverso o normal.");
 
         while (!salir) {
- 
+            
             try {
+                tipo = submenu2();
+                modo = submenu3();
+                String linea;
+                String asc = "Ascendente";
 
-                opcion = submenu1();
-
-                switch (opcion) {
-                    case 1:
-                        tipo = submenu2("BinaryInsertionSort", 1);
-                        if(tipo == 1){
-                            modo = submenu3();
-                            if(modo == 2){
-                                ascedente = false;
-                            }
-                            procedimientos(opcion, new ComparadorDeCancionesPorNombre(ascedente), archivoSalida);
-
-                        }else if(tipo == 2) {
-                            modo = submenu3();
-                            if(modo == 2){
-                                ascedente = false;
-                            }
-                            procedimientos(opcion, new ComparadorDeCancionesPorDias(ascedente), archivoSalida);
-                        }
-                        
-                        break;
-                    case 2:
-                    tipo = submenu2("MergeSort", 2);
-                    if(tipo == 1){
-                        modo = submenu3();
-                        if(modo == 2){
-                            ascedente = false;
-                        }
-                        procedimientos(opcion, new ComparadorDeCancionesPorNombre(ascedente), archivoSalida);
-
-                    }else if(tipo == 2) {
-                        modo = submenu3();
-                        if(modo == 2){
-                            ascedente = false;
-                        }
-                        procedimientos(opcion, new ComparadorDeCancionesPorDias(ascedente), archivoSalida);
-                    }
-                        break;
-                    case 3:
-                        System.out.println("Has seleccionado la opcion 3");
-                        System.out.println("El ordenamiento será por el método QuickSort");
-                        break;
-                    case 4:
-                        System.out.println("Has seleccionado la opcion 4");
-                        System.out.println("El ordenamiento será por el método RadixSort");
-                        break;
-                    case 5:
-                        salir = true;
-                        break;
-                    default:
-                        System.out.println("Solo números entre 1 y 4");
+                if(modo == 2){
+                    ascedente = false;
+                    asc = "Descendente";
                 }
+
+                Comparator comparator;
+                if(tipo == 1){
+                    comparator = new ComparadorDeCancionesPorNombre(ascedente);
+                    linea = "Nombre de Cancion";
+                }else {
+                    comparator = new ComparadorDeCancionesPorDias(ascedente);
+                    linea = "Dias desde el Lanzamiento";
+                }
+                
+                linea += "," + asc;
+                
+                procedimientos(linea, comparator);
+                     
             } catch (InputMismatchException e) {
                 System.out.println("Debes insertar un número");
                 sn.next();
@@ -120,39 +91,29 @@ public class CtrlMain {
         return lista;
     }
 
-    public void procedimientos(int opcion, Comparator<? super Song> comparator, String archivoSalida ) throws IOException{
-        lista = ordenarLista(opcion, comparator); // Ordenar lista
-        daoCanciones.escribirArchivo( archivoSalida, lista); // Escribir en archivo
+    public void procedimientos(String linea, Comparator<? super Song> comparator) throws IOException{
         String metricas = "";
-        switch(opcion){
-            case 1: metricas = BinaryInsertionSort.tiempoTotal + "," + BinaryInsertionSort.numComparaciones + "," + BinaryInsertionSort.numIntercambios;
-                break;
-            case 2: metricas = MergeSort.tiempoTotal + "," + MergeSort.numComparaciones + "," + MergeSort.numIntercambios;
-                break;
-            case 3:
-                break;
-            case 4: 
-                break;
-            default: System.out.println("Error en opción, metodo precedimientos");
-                break;
-        }
+        ArrayList<String> listaMetricas = new ArrayList<>();
+        listaMetricas.add("Method, Column, Mode, EjecutionTime, Comparations, Interchanges");
         
-        daoMetricas.escribirArchivoMetricas(opcion-1, metricas);
-    }
-    public int submenu1(){
-        System.out.println("1. Opcion 1: método BinaryInsertionSort ");
-        System.out.println("2. Opcion 2: método MergeSort");
-        System.out.println("3. Opcion 3: método QuickSort");
-        System.out.println("4. Opcion 4: método RadixSort"); 
-        System.out.println("5. Salir");
-        System.out.println("Escribe una de las opciones");
-        int opcion = sn.nextInt();
-        System.out.println("__________________________________________________________");
-        return opcion;
+        lista = ordenarLista(1, comparator); // Ordenar lista por BinaryInsertionSort
+        daoCanciones.escribirArchivo( "BinaryInsertionSort.csv", lista); // Escribir en archivo
+        metricas =  "BinaryInsertionSort" + "," + linea + "," + BinaryInsertionSort.tiempoTotal + "," + BinaryInsertionSort.numComparaciones + "," + BinaryInsertionSort.numIntercambios;
+        listaMetricas.add(metricas);
+                
+        lista = ordenarLista(2, comparator); // Ordenar lista por BinaryInsertionSort
+        daoCanciones.escribirArchivo( "MergeSorth_Ordenado.csv", lista); // Escribir en archivo
+        metricas = "MergeSort" + "," +  linea + "," + MergeSort.tiempoTotal + "," + MergeSort.numComparaciones + "," + MergeSort.numIntercambios;
+        listaMetricas.add(metricas);
+
+
+
+        daoMetricas.escribirArchivoMetricas( listaMetricas); //Manda las metricas para el archivo de metricas
+            
+        
     }
     
-    public int submenu2(String metodo, int opcion){
-        System.out.println("Has seleccionado la opcion "+ opcion +": "+ metodo);
+    public int submenu2(){
         System.out.println("1. Opcion 1: ordenar por nombre de la canción");
         System.out.println("2. Opcion 2: ordenar por número de días desde el lanzamiento de la canción");
         System.out.println("Escribe una de las opciones");

@@ -1,4 +1,3 @@
-339,18240,975196
-155,4396,10975
-,,
-,,
+Method, Column, Mode, EjecutionTime, Comparations, Interchanges
+BinaryInsertionSort,Nombre de Cancion,Descendente,334,4560,243799
+MergeSort,Nombre de Cancion,Descendente,1,4368,10975
