@@ -8,7 +8,9 @@ import domain.Song;
 public class MergeSort {
    private static Song[] theArray;        // ref to array theArray
    private static int nElems;               // number of data items
-   private static long tiempoTotal;
+   public static long tiempoTotal = 0;
+   public static int numComparaciones = 0;
+   public static int numIntercambios = 0;
 
    public MergeSort(int max)   {
       theArray = new Song[max];      // create array
@@ -30,11 +32,11 @@ public class MergeSort {
       theArray = new Song[lista.size()];
       theArray = transformarListToArray(lista);
 
-      long inicio = System.nanoTime(); //inicio de la ejecución del algoritmo;
+      long inicio = System.currentTimeMillis(); //inicio de la ejecución del algoritmo;
       Song[] workSpace = new Song[lista.size()];
       recMergeSort(workSpace, 0, lista.size()-1, c);
 
-      long fin = System.nanoTime();
+      long fin = System.currentTimeMillis();
 
       tiempoTotal = fin - inicio;
 
@@ -44,6 +46,8 @@ public class MergeSort {
    }
 
    private static void recMergeSort(Song[] workSpace, int lowerBound, int upperBound, Comparator<? super Song> c ){
+      
+
       if(lowerBound == upperBound)            // if range is 1,
          return;                              // no use sorting
       else {                                    
@@ -61,19 +65,31 @@ public class MergeSort {
       int n = upperBound-lowerBound+1;       // # of items
 
       while(lowPtr <= mid && highPtr <= upperBound)
-         if( c.compare(theArray[lowPtr], theArray[highPtr]) < 0 )
-            workSpace[j++] = theArray[lowPtr++];
-         else
+         if( c.compare(theArray[lowPtr], theArray[highPtr]) < 0 ){
+             workSpace[j++] = theArray[lowPtr++];
+             numComparaciones++;
+             numIntercambios++;
+         } 
+         else{
             workSpace[j++] = theArray[highPtr++];
+            numIntercambios++;
+         }
 
-      while( lowPtr <= mid)
+      while( lowPtr <= mid){
          workSpace[j++] = theArray[lowPtr++];
+         numIntercambios++;
+      }
+         
 
-      while(highPtr <= upperBound)
+      while(highPtr <= upperBound){
          workSpace[j++] = theArray[highPtr++];
+         numIntercambios++;
+      }
+         
 
       for(j=0; j<n; j++)
          theArray[lowerBound+j] = workSpace[j];
+         numIntercambios++;
    }
 
    public static LinkedList<Song> transformarArrayToLista( ) {

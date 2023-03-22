@@ -24,7 +24,7 @@ public class ComparadorDeCancionesPorNombre implements Comparator<Song>{
     //Si son iguales retorna 0
     @Override
     public int compare(Song o1, Song o2) {
-       return multiplicador* (o1.getName().compareTo(o2.getName()));
+       return multiplicador* (o1.getSong().compareTo(o2.getSong()));
     }
     
 }

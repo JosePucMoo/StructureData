@@ -7,16 +7,23 @@ import domain.Song;
 
 public class BinaryInsertionSort {
 
-    private static long tiempoTotal;
+    public static long tiempoTotal = 0;
+    public static int numComparaciones = 0;
+    public static int numIntercambios = 0;
+
 
     //  implementacion iterativa 
     public static <T> int binarySearch(LinkedList<Song> lista, Song item, int low, int high,Comparator<? super Song> c){
         while (low <= high) {
             int mid = low + (high - low) / 2;
-            if (c.compare(item, lista.get(mid)) == 0)
-                return mid + 1;
-            else if (c.compare(item, lista.get(mid)) > 0)
+            if (c.compare(item, lista.get(mid)) == 0){
+               numComparaciones++; //Comparacion
+                return mid + 1;  
+            }
+            else if (c.compare(item, lista.get(mid)) > 0){
+                numComparaciones++; //Comparacion
                 low = mid + 1;
+            }
             else
                 high = mid - 1;
         }
@@ -27,7 +34,7 @@ public class BinaryInsertionSort {
         int i, loc, j;
         Song selected;
 
-        long inicio = System.nanoTime(); //Inicio del conteo
+        long inicio = System.currentTimeMillis(); //Inicio del conteo
     
         for (i = 1; i < n; ++i) {
             j = i - 1;
@@ -39,14 +46,15 @@ public class BinaryInsertionSort {
             // Hace un corrimiento a la derecha de los datos
             while (j >= loc) {
                 lista.set(j + 1, lista.get(j));
+                numIntercambios++;// Numeros de intercambios
                 j--;
             }
             lista.set(j + 1, selected);
         }
 
-        long fin = System.nanoTime(); // fin del cálculo de la ejecución
+        long fin = System.currentTimeMillis(); // fin del cálculo de la ejecución
 
-        tiempoTotal = fin - inicio; //Total del cálculo de la ejecución del algoritmo
+        tiempoTotal = (fin - inicio); //Total del cálculo de la ejecución del algoritmo
 
         return lista;
     }
