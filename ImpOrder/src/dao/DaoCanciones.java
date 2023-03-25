@@ -9,8 +9,6 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-import javax.swing.JOptionPane;
-
 import domain.Song;
 
 public class DaoCanciones {
@@ -18,6 +16,12 @@ public class DaoCanciones {
     File archivo = new File(path);
     LinkedList<Song> lista;
 
+    /**
+     * Lee el archivo de canciones  y retorna las canciones del documento en una LinkedList
+     * 
+     * @return LinkedList con las canciones del archivo leído.
+     * @throws FileNotFoundException Si el archivo no es encontrado entonces lanza la excepción.
+     */
     public LinkedList<Song> traerCanciones() throws FileNotFoundException{
         LinkedList<Song> lista = new LinkedList<>();
         Scanner obj = new Scanner(new FileReader(path));
@@ -48,6 +52,12 @@ public class DaoCanciones {
         return lista;
     }
 
+    /**
+     * Escribe en el archivo con el nombre proporcionado la lista de canciones enviadas.
+     * @param archivoName Nombre del archivo por crear o sobreescribir.
+     * @param lista LinkedList de canciones por escribir en archivo.
+     * @throws IOException
+     */
     public void escribirArchivo(String archivoName, LinkedList<Song> lista  ) throws IOException {
         String path = "src\\orderData\\" + archivoName;
 

@@ -2,18 +2,29 @@ package utils.sortingMethods;
 
 import java.util.Comparator;
 import java.util.LinkedList;
-
 import domain.Song;
 
+
+/**
+ * Clase que crea un objeto para ordenar listas doblemente ligadas.
+ */
 public class BinaryInsertionSort {
 
     public static long tiempoTotal = 0;
     public static int numComparaciones = 0;
     public static int numIntercambios = 0;
-
-
-    //  implementacion iterativa 
-    public static <T> int binarySearch(LinkedList<Song> lista, Song item, int low, int high,Comparator<? super Song> c){
+ 
+    /**
+     * Busca un elemento en la lista proporcionada  retorna su posición.
+     * 
+     * @param lista Lista donde se hará la busqueda del elemento.
+     * @param item  Elemento por buscar en la lista.
+     * @param low   Posición del elemento inferior de la lista.
+     * @param high  Posición del elemento superior de la lista.
+     * @param c     Comparador para los elementos de la lista.
+     * @return      Retorna la posición del elemento en la lista.
+     */
+    private static int binarySearch(LinkedList<Song> lista, Song item, int low, int high,Comparator<? super Song> c){
         while (low <= high) {
             int mid = low + (high - low) / 2;
             if (c.compare(item, lista.get(mid)) == 0){
@@ -30,7 +41,14 @@ public class BinaryInsertionSort {
         return low;
     }
 
-    public static <T> LinkedList<Song> binaryInsertionSort(LinkedList<Song> lista, int n, Comparator<? super Song> c ) {
+    /**
+     * Ordena la lista proporcionada con el método de ordenamiento BinaryInsertionSort
+     * @param lista Lista por ordenar.
+     * @param n     Tamaño de la lista.
+     * @param c     Comparador para los elementos de la lista.
+     * @return      Retorna un LinkedList de canciones ordenadas.
+     */
+    public static LinkedList<Song> binaryInsertionSort(LinkedList<Song> lista, int n, Comparator<? super Song> c ) {
         int i, loc, j;
         Song selected;
 
@@ -59,11 +77,4 @@ public class BinaryInsertionSort {
         return lista;
     }
 
-    public void printArray(int arr[]) {
-        int n = arr.length;
-        for (int i = 0; i < n; ++i)
-            System.out.print(arr[i] + " ");
- 
-        System.out.println();
-    }
 }

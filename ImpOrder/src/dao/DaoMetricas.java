@@ -1,17 +1,22 @@
 package dao;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-
+/**
+ * Clase que controla el archivo de Metricas.csv
+ */
 public class DaoMetricas {
     File archivo;
     String path = "src\\orderData\\Metricas.csv";
 
+    /**
+     * Escribe en el archivo "Metricas" la lista de Strings enviadas.
+     * @param listaMetricas LinkedList que será escrito en el archivo.
+     * @throws IOException  Si el archivo no puede ser creado o abierto lanza la excepción.
+     */
     public void escribirArchivoMetricas(ArrayList<String> listaMetricas) throws IOException{
         archivo = new File(path);
         
@@ -23,26 +28,5 @@ public class DaoMetricas {
 
         fw.close();
     }
-
-    public ArrayList<String>  leerArchivo() throws FileNotFoundException {
-        ArrayList<String> lista = new ArrayList<>();
-        Scanner obj = new Scanner(archivo);
-    
-        while(obj.hasNextLine()){
-            lista.add(obj.nextLine());
-        }
-        return lista;
-    }
-    
-
-    public void crearAarchivo(String path ) throws IOException {
-        archivo = new File(path);
-        if(!archivo.exists())
-        {
-            archivo.createNewFile();
-        }
-    }
-
-
-    
+  
 }

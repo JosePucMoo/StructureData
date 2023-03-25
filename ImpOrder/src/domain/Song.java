@@ -1,5 +1,8 @@
 package domain;
 
+/**
+ * Una canción que que se encuentra entre el ranking 10000.
+ */
 public class Song{
         
     private int position;
@@ -14,6 +17,19 @@ public class Song{
 
     
 
+    /**
+     * Contructor que crea un objeto Song.
+     * 
+     * @param position Ranking de la canción.
+     * @param artist    Nombre del artista de la canción.
+     * @param song      Nombre de la canción.
+     * @param days      Días desde el lanzamiento de la canción.
+     * @param top_10    Nº de veces dentro de la posición máxima de los 10 mejores.
+     * @param peak_Position Posición máxima alcanzada.
+     * @param peak_Position_xTimes Posición máxima (xTimes).
+     * @param peak_Streams Número total de transmisiones durante la posición.
+     * @param total_Streams Total de transmisiones de canciones.
+     */
     public Song(int position, String artist, String song, int days, double top_10, int peak_Position, String peak_Position_xTimes, int peak_Streams, double total_Streams) {
         this.position = position;
         this.artist = artist;

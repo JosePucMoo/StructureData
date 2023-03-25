@@ -1,3 +1,5 @@
-Method, Column, Mode, EjecutionTime, Comparations, Interchanges
-BinaryInsertionSort,Nombre de Cancion,Descendente,334,4560,243799
-MergeSort,Nombre de Cancion,Descendente,1,4368,10975
+Method, Column, Mode, EjecutionTime(ms), Comparations, Interchanges
+BinaryInsertionSort,Dias desde el LanzamientoDescendente,246,5195,100658
+MergeSort,Dias desde el LanzamientoDescendente,47,4385,10975
+QuickSort,Dias desde el LanzamientoDescendente,893,499500,21270
+RadixSort,Dias desde el LanzamientoDescendente,3,0,4000

@@ -1,3 +1,4 @@
+
 import controller.CtrlMain;
 
 
@@ -6,11 +7,9 @@ public class App {
     
 
         
-           CtrlMain controlMain = new CtrlMain();
+        CtrlMain controlMain = new CtrlMain();
 
-           controlMain.mostrarMenu();
-        
-        
+        controlMain.ordenarListasDeCanciones();
         
     }
 }

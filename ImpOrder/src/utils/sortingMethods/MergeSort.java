@@ -2,50 +2,45 @@ package utils.sortingMethods;
 
 import java.util.Comparator;
 import java.util.LinkedList;
-
 import domain.Song;
 
-public class MergeSort {
-   private static Song[] theArray;        // ref to array theArray
-   private static int nElems;               // number of data items
+/**
+ * Clase que crea un objeto MergeSort el cual funciona para ordenar LinkedList con el método de ordenamiento MergeSort.
+ */
+public class MergeSort{
+   private  static LinkedList<Song> theArray;      // ref to array theArray
    public static long tiempoTotal = 0;
    public static int numComparaciones = 0;
    public static int numIntercambios = 0;
 
-   public MergeSort(int max)   {
-      theArray = new Song[max];      // create array
-      nElems = 0;
-   }
-   
-   public void insert(Song value){
-      theArray[nElems] = value;      // insert it
-      nElems++;                      // increment size
-   }
 
-   public void display() {
-      for(int j=0; j<nElems; j++)    // for each element,
-         System.out.print(theArray[j] + " ");  // display it
-      System.out.println("");
-   }
-
+   /**
+    * @param lista Lista por ordenar con metodo merge sort.
+    * @param c Comparador para los elemtos de la lista.
+    * @return  Regresa una LinkedList de canciones ordenadas.
+    */
    public static LinkedList<Song> mergeSort( LinkedList<Song> lista, Comparator<? super Song> c ) {
-      theArray = new Song[lista.size()];
-      theArray = transformarListToArray(lista);
-
+      theArray = lista;
       long inicio = System.currentTimeMillis(); //inicio de la ejecución del algoritmo;
-      Song[] workSpace = new Song[lista.size()];
+      LinkedList<Song> workSpace = new LinkedList<>();
       recMergeSort(workSpace, 0, lista.size()-1, c);
 
       long fin = System.currentTimeMillis();
 
       tiempoTotal = fin - inicio;
 
-      lista = transformarArrayToLista();
-
-      return lista;
+      return MergeSort.theArray;
    }
 
-   private static void recMergeSort(Song[] workSpace, int lowerBound, int upperBound, Comparator<? super Song> c ){
+   /**
+    * Ordena la lista con recursividad.
+
+    * @param workSpace  LinkedList de canciones.
+    * @param lowerBound Posición inferior de la lista.
+    * @param upperBound Posición superior de la lista.
+    * @param c Comparador de elementos de la lista.
+    */
+   private static void recMergeSort(LinkedList<Song> workSpace, int lowerBound, int upperBound, Comparator<? super Song> c ){
       
 
       if(lowerBound == upperBound)            // if range is 1,
@@ -58,62 +53,49 @@ public class MergeSort {
       }  // end else
    }  // end recMergeSort()
 
-   private static void merge(Song[] workSpace, int lowPtr, int highPtr, int upperBound, Comparator<? super Song> c ) {
+   /**
+    * Se encarga de intercalar los elementos de las dos divisiones.
+
+    * @param workSpace  Linkedlist donde se van intercalando las dos listas.
+    * @param lowPtr     Posición inferior de la lista.
+    * @param highPtr    Posición superior de la lista.
+    * @param upperBound Posición superior de la lista.
+    * @param c          Comparador para los elementos de la lista.
+    */
+   private static void merge(LinkedList<Song> workSpace, int lowPtr, int highPtr, int upperBound, Comparator<? super Song> c ) {
       int j = 0;                             // workspace index
       int lowerBound = lowPtr;
       int mid = highPtr-1;
       int n = upperBound-lowerBound+1;       // # of items
+      
+      workSpace = new LinkedList<>(theArray);
 
-      while(lowPtr <= mid && highPtr <= upperBound)
-         if( c.compare(theArray[lowPtr], theArray[highPtr]) < 0 ){
-             workSpace[j++] = theArray[lowPtr++];
+      while(lowPtr <= mid && highPtr <= upperBound){
+
+         if( c.compare(theArray.get(lowPtr), theArray.get(highPtr) ) < 0 ){
+            
+            workSpace.set(j++, theArray.get(lowPtr++));
              numComparaciones++;
-             numIntercambios++;
+             numIntercambios++;  
          } 
          else{
-            workSpace[j++] = theArray[highPtr++];
+               workSpace.set(j++, theArray.get(highPtr++));
             numIntercambios++;
          }
+      }
 
       while( lowPtr <= mid){
-         workSpace[j++] = theArray[lowPtr++];
+         workSpace.set(j++, theArray.get(lowPtr++));
          numIntercambios++;
       }
          
-
       while(highPtr <= upperBound){
-         workSpace[j++] = theArray[highPtr++];
+         workSpace.set(j++, theArray.get(highPtr++));
          numIntercambios++;
       }
          
-
       for(j=0; j<n; j++)
-         theArray[lowerBound+j] = workSpace[j];
+      theArray.set(lowerBound+j, workSpace.get(j));
          numIntercambios++;
-   }
-
-   public static LinkedList<Song> transformarArrayToLista( ) {
-
-      LinkedList<Song> lista = new LinkedList<>();
-      int cont = 0;
-
-      while(cont < theArray.length ) {
-         lista.add(theArray[cont]);
-         cont++;
-      }
-
-      return lista;
-   }
-
-   public static Song[] transformarListToArray(LinkedList<Song> lista ) {
-
-      int cont = 0;
-
-      while(cont < lista.size() ) {
-         theArray[cont] = lista.get(cont);
-         cont++;
-      }
-
-      return theArray;
    }
 }
