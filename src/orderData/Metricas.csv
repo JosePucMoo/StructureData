@@ -1,0 +1,5 @@
+Method, Column, Mode, EjecutionTime(ms), Comparations, Interchanges
+BinaryInsertionSort,Dias desde el LanzamientoAscendente,503,3384,398358
+MergeSort,Dias desde el LanzamientoAscendente,35,4166,10975
+QuickSort,Dias desde el LanzamientoAscendente,828,499500,43972
+RadixSort,Dias desde el LanzamientoAscendente,384,0,8400000
