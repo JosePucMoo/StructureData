@@ -2,12 +2,17 @@ package vista;
 
 import java.util.Scanner;
 
+/**
+ * Clase que crea un objeto VistaMenu el cual funciona para mostrar el menú del programa.
+ */
 public class VistaMenu {
+    Scanner sn = new Scanner(System.in);
     
-
+    /**
+    * Método que muestra si se desea ordernar por nombre de la canción o por número de días desde el lanzamiento de la canción.
+    */
     public int mostrarMenuColumnas(){
         int tipo = 0;
-        Scanner sn = new Scanner(System.in);
         System.out.println("__________________________________________________________");
         System.out.println("1. Opcion 1: ordenar por nombre de la canción");
         System.out.println("2. Opcion 2: ordenar por número de días desde el lanzamiento de la canción");
@@ -28,9 +33,12 @@ public class VistaMenu {
         return tipo;
     }
 
+    /**
+    * Método que muestra si se desea ordernar de forma ascendente o descendente.
+    */
     public int mostrarMenuModo(){
         int modo = 0;
-        Scanner sn = new Scanner(System.in);
+
         System.out.println("");
         System.out.println("__________________________________________________________");
         System.out.println("¿En qué modo desea ordenarlo?:");
@@ -39,7 +47,7 @@ public class VistaMenu {
         modo = sn.nextInt();
         
         while(modo != 1 && modo != 2){
-        sn = new Scanner(System.in);
+        
         System.out.println("**********************************************************");
         System.out.println("Opción inválida, ingrese una opción válida.");
         System.out.println("**********************************************************");
@@ -53,9 +61,12 @@ public class VistaMenu {
         return modo;
     }
 
+    /**
+    * Método que muestra si se desea continuar con el programa.
+    */
     public int mostrarMenuSalir(){
         int opcion = 0;
-        Scanner sn = new Scanner(System.in);
+        
         System.out.println("¿Desea continuar?");
         System.out.println("1. Si");
         System.out.println("2. No");
@@ -72,6 +83,9 @@ public class VistaMenu {
         return opcion;
     }
 
+    /**
+    * Método que muestra de qué trata el programa.
+    */
     public void mostrarMenuPrincipal( ){
         System.out.println(" __________________________________________________________ ");
         System.out.println("|El siguiente programa ordena 1000 canciones de spotify,   |");

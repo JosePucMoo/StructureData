@@ -73,5 +73,15 @@ public class DaoCanciones {
 
     }
 
+    /**
+     * Elimina el archivo Radix.
+     */
+    public void borrarArchivoRadix(){
+        String path = "src\\orderData\\RadixSort_Ordenado.csv";
+        File archivoRadix = new File(path);
+
+        archivoRadix.delete();
+    }
+
 
 }

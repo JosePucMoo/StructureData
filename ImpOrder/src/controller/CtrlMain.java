@@ -17,12 +17,18 @@ import utils.sortingMethods.QuickSort;
 import utils.sortingMethods.RadixSort;
 import vista.VistaMenu;
 
+/**
+ * Clase que crea un objeto para controlar el menú.
+ */
 public class CtrlMain {
 
     DaoCanciones daoCanciones= new DaoCanciones();
     DaoMetricas daoMetricas = new DaoMetricas();
     VistaMenu vista = new VistaMenu();
 
+/**
+ * Método que muestra todas las opciones del menú y ve de que forma se va a ordenar la lista de canciones.
+ */
     public void ordenarListasDeCanciones( ) throws IOException{
         
         boolean salir = false;
@@ -32,6 +38,7 @@ public class CtrlMain {
         vista.mostrarMenuPrincipal();
 
         while (!salir) {
+            int ctrlTipo = 5;
 
             tipo = vista.mostrarMenuColumnas();
             modo = vista.mostrarMenuModo();
@@ -44,6 +51,8 @@ public class CtrlMain {
 
             if(tipo == 1){ // Se define el tipo de comparador par usar
                 comparator = new ComparadorDeCancionesPorNombre(ascedente);
+                ctrlTipo = 4;
+                daoCanciones.borrarArchivoRadix();
             }else {
                 comparator = new ComparadorDeCancionesPorDias(ascedente);
             }
@@ -51,7 +60,7 @@ public class CtrlMain {
 
             LinkedList<Song> lista = new LinkedList<Song>();
 
-            for(int i = 1; i < 5; i++){
+            for(int i = 1; i < ctrlTipo; i++){
                 lista = ordenarLista(i, comparator, ascedente);
                 escribirListasDocumento(i, lista);
             }
@@ -67,6 +76,13 @@ public class CtrlMain {
         }
     }
 
+    /**
+     * Método que ordena las lista con todos los métodos de ordenamiento.
+     * @param opcion  número que determina que método de ordenamiento se va a utilizar.
+     * @param comparator Comparador para los elemtos de la lista.
+     * @param ascendente Booleano que ayuda al radixsort a saber de que modo va a ordenar.
+     * @return  Regresa una LinkedList de canciones ordenadas.
+     */
     public LinkedList<Song> ordenarLista( int opcion, Comparator<? super Song> comparator, boolean ascendente) throws FileNotFoundException {
         LinkedList<Song> lista = daoCanciones.traerCanciones(); //Leer el archivo CSV donde están las canciones
 
@@ -90,7 +106,11 @@ public class CtrlMain {
         return lista;
     }
 
-
+    /**
+     * Método que crear los archivos de cada uno de los metodos de ordenamiento.
+     * @param opcion  número que determina que método de ordenamiento se va a escribir su archivo.
+     * @param lista Lista ordenada.
+     */
     public void escribirListasDocumento(int opcion, LinkedList<Song> lista ) throws IOException{
         switch(opcion){ //Cada opción representa un método de ordenamiento
             case 1: //Escribir el archivo binaryInsertionSort
@@ -111,6 +131,11 @@ public class CtrlMain {
         }
     }
 
+    /**
+     * Método que crear el archivo de métricas con cada uno de los metodos de ordenamiento.
+     * @param columna  número que determina de qué modo se ordenó la lista, si por días o por nombres.
+     * @param modo número que determina si se ordenó de forma ascendente o descendente la lista.
+     */
     public void escribirMetricas(int columna, int modo) throws IOException{
         String metricas = "";
         ArrayList<String> listaMetricas = new ArrayList<>();
@@ -149,9 +174,10 @@ public class CtrlMain {
                 metricas = "QuickSort" + "," +  linea + "," + QuickSort.tiempoTotal + "," + QuickSort.numComparaciones + "," + QuickSort.numIntercambios;
                 listaMetricas.add(metricas);
                 
-                metricas = "RadixSort" + "," +  linea + "," + RadixSort.tiempoTotal + "," + RadixSort.numComparaciones + "," + RadixSort.numIntercambios;
-                listaMetricas.add(metricas);
-                
+                if(columna == 2){
+                    metricas = "RadixSort" + "," +  linea + "," + RadixSort.tiempoTotal + "," + RadixSort.numComparaciones + "," + RadixSort.numIntercambios;
+                    listaMetricas.add(metricas);
+                }
         
 
         daoMetricas.escribirArchivoMetricas( listaMetricas); //Escribe las metricas para el archivo de metricas   
